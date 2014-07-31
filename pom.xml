@@ -1,0 +1,330 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.dsecet</groupId>
+    <artifactId>xaos</artifactId>
+    <version>${xaos.version}</version>
+    <packaging>pom</packaging>
+
+    <name>xaos</name>
+    <description>Xaos bill of materials</description>
+    <url>http://www.dceset.com/</url>
+    <organization>
+        <name>Dceset, Inc.</name>
+        <url>http://www.dsecet.com</url>
+    </organization>
+
+    <inceptionYear>2014</inceptionYear>
+    <licenses></licenses>
+    <developers>
+        <developer>
+            <id>fablenas</id>
+            <email>ry.wang@dsecet.com</email>
+            <name>Fablenas</name>
+            <organization>Dceset, Inc.</organization>
+            <organizationUrl>http://www.dsecet.com</organizationUrl>
+            <roles>
+                <role>Architect</role>
+            </roles>
+            <timezone>8</timezone>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:ssh://git@gitlab.defshanre.com/jee/xaos.git</connection>
+        <url>https://gitlab.defshanre.com/jee/xaos.git</url>
+        <tag>HEAD</tag>
+    </scm>
+    <mailingLists></mailingLists>
+    <distributionManagement></distributionManagement>
+    <ciManagement></ciManagement>
+    <issueManagement></issueManagement>
+    <reporting></reporting>
+
+    <properties>
+        <!-- Infrastructure -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+
+        <!-- Maven -->
+        <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
+        <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
+        <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
+        <maven-scm-plugin.version>1.9.1</maven-scm-plugin.version>
+        <maven-release-plugin.version>2.3.2</maven-release-plugin.version>
+
+        <!-- Supplementary -->
+        <lombok.version>1.14.4</lombok.version>
+
+        <!-- Spring -->
+        <spring.platform.version>1.0.1.RELEASE</spring.platform.version>
+
+        <!-- Format -->
+        <jackson.version>2.2.2</jackson.version>
+
+        <!-- Utility -->
+        <reflections.version>0.9.9-RC1</reflections.version>
+
+        <!-- Project Properties -->
+        <xaos.version>0.1-SNAPSHOT</xaos.version>
+        <mysql.db.url>jdbc:mysql://localhost:3306/xaos</mysql.db.url>
+        <mysql.hibernate.hbm2ddl.auto>update</mysql.hibernate.hbm2ddl.auto>
+        <mysql.hibernate.show.sql>false</mysql.hibernate.show.sql>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <mysql.db.url>jdbc:mysql://localhost:3306/xaos</mysql.db.url>
+                <mysql.quartz.db.url>jdbc:mysql://localhost:3306/xaos</mysql.quartz.db.url>
+                <mysql.hibernate.hbm2ddl.auto>none</mysql.hibernate.hbm2ddl.auto>
+                <mysql.hibernate.show.sql>false</mysql.hibernate.show.sql>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.spring.platform</groupId>
+                <artifactId>platform-bom</artifactId>
+                <version>${spring.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+                    <configuration>
+                        <scanIntervalSeconds>10</scanIntervalSeconds>
+                        <webApp>
+                            <contextPath>/</contextPath>
+                        </webApp>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                    <configuration>
+                        <archive>
+                            <index>true</index>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                            </manifest>
+                            <manifestEntries>
+                                <mode>development</mode>
+                                <url>${project.url}</url>
+                                <key>value</key>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>install</id>
+                            <phase>install</phase>
+                            <goals>
+                                <goal>sources</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${maven-war-plugin.version}</version>
+                    <configuration>
+                        <webResources>
+                            <resource>
+                                <directory>src/main/webapp</directory>
+                            </resource>
+                        </webResources>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-javadoc</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <show>private</show>
+                        <nohelp>true</nohelp>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <junitArtifactName>junit:junit</junitArtifactName>
+                        <includes>
+                            <include>**/*Test.java</include>
+                            <include>**/*Tests.java</include>
+                        </includes>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-scm-plugin</artifactId>
+                    <version>${maven-scm-plugin.version}</version>
+                    <configuration>
+                        <username>deploy</username>
+                        <password>d3p1oy</password>
+                        <goals>install</goals>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${maven-release-plugin}</version>
+                    <configuration>
+                        <tagNameFormat>v_@{project.version}</tagNameFormat>
+                        <tagBase>${project.scm.connection}</tagBase>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+    </build>
+
+    <repositories>
+        <repository>
+            <id>maven.net.cn</id>
+            <name>Maven China Mirror</name>
+            <url>http://maven.net.cn/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>org.jboss.repository.maven2</id>
+            <name>JBoss repository</name>
+            <url>http://repository.jboss.org/maven2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>org.jboss.repository.releases</id>
+            <name>JBoss Maven Release Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>org.jboss.public</id>
+            <name>JBoss Public Repository</name>
+            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>org.spring.release</id>
+            <name>SpringSource Repository</name>
+            <url>http://repo.springsource.org/release</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+</project>
