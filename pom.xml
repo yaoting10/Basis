@@ -67,7 +67,7 @@
 
         <!-- Project Properties -->
         <xaos.version>0.1-SNAPSHOT</xaos.version>
-        <mysql.db.url>jdbc:mysql://localhost:3306/xaos</mysql.db.url>
+        <mysql.db.url>jdbc:mysql://localhost:3306/${project.name}</mysql.db.url>
         <mysql.hibernate.hbm2ddl.auto>update</mysql.hibernate.hbm2ddl.auto>
         <mysql.hibernate.show.sql>false</mysql.hibernate.show.sql>
     </properties>
@@ -76,8 +76,7 @@
         <profile>
             <id>prod</id>
             <properties>
-                <mysql.db.url>jdbc:mysql://localhost:3306/xaos</mysql.db.url>
-                <mysql.quartz.db.url>jdbc:mysql://localhost:3306/xaos</mysql.quartz.db.url>
+                <mysql.db.url>jdbc:mysql://localhost:3306/${project.name}</mysql.db.url>
                 <mysql.hibernate.hbm2ddl.auto>none</mysql.hibernate.hbm2ddl.auto>
                 <mysql.hibernate.show.sql>false</mysql.hibernate.show.sql>
             </properties>
