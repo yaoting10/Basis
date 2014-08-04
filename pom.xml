@@ -47,11 +47,14 @@
         <java.version>1.8</java.version>
 
         <!-- Maven -->
-        <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
-        <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
+        <maven-jar-plugin.version>2.5</maven-jar-plugin.version>
+        <maven-war-plugin.version>2.4</maven-war-plugin.version>
+        <maven-dependency-plugin.version>2.8</maven-dependency-plugin.version>
         <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
         <maven-scm-plugin.version>1.9.1</maven-scm-plugin.version>
-        <maven-release-plugin.version>2.3.2</maven-release-plugin.version>
+        <maven-release-plugin.version>2.5</maven-release-plugin.version>
+        <maven-archetype.version>2.2</maven-archetype.version>
+        <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
 
         <!-- Supplementary -->
         <lombok.version>1.14.4</lombok.version>
@@ -66,29 +69,11 @@
         <reflections.version>0.9.9-RC1</reflections.version>
 
         <!-- Project Properties -->
-        <xaos.version>0.1-SNAPSHOT</xaos.version>
+        <xaos.version>1.0.0-SNAPSHOT</xaos.version>
         <mysql.db.url>jdbc:mysql://localhost:3306/${project.name}</mysql.db.url>
         <mysql.hibernate.hbm2ddl.auto>update</mysql.hibernate.hbm2ddl.auto>
         <mysql.hibernate.show.sql>false</mysql.hibernate.show.sql>
     </properties>
-
-    <profiles>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <mysql.db.url>jdbc:mysql://localhost:3306/${project.name}</mysql.db.url>
-                <mysql.hibernate.hbm2ddl.auto>none</mysql.hibernate.hbm2ddl.auto>
-                <mysql.hibernate.show.sql>false</mysql.hibernate.show.sql>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-    </profiles>
 
     <dependencies>
         <dependency>
@@ -210,6 +195,30 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven-dependency-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>deploy</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>sources</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin.version}</version>
+                    <configuration>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
                     <executions>
@@ -258,6 +267,18 @@
                         <tagNameFormat>v_@{project.version}</tagNameFormat>
                         <tagBase>${project.scm.connection}</tagBase>
                     </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.archetype</groupId>
+                    <artifactId>archetype-packaging</artifactId>
+                    <version>${maven-archetype.verison}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.archetype</groupId>
+                    <artifactId>archetype-plugin</artifactId>
+                    <version>${maven-archetype.verison}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
