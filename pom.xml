@@ -4,7 +4,7 @@
 
     <groupId>com.dsecet</groupId>
     <artifactId>xaos</artifactId>
-    <version>${xaos.version}</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>xaos</name>
@@ -47,6 +47,7 @@
         <java.version>1.8</java.version>
 
         <!-- Maven -->
+        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
         <maven-jar-plugin.version>2.5</maven-jar-plugin.version>
         <maven-war-plugin.version>2.4</maven-war-plugin.version>
         <maven-dependency-plugin.version>2.8</maven-dependency-plugin.version>
@@ -55,6 +56,8 @@
         <maven-release-plugin.version>2.5</maven-release-plugin.version>
         <maven-archetype.version>2.2</maven-archetype.version>
         <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
+
+        <jetty-maven-plugin.version>9.2.3.v20140905</jetty-maven-plugin.version>
 
         <!-- Supplementary -->
         <lombok.version>1.14.4</lombok.version>
@@ -69,7 +72,6 @@
         <reflections.version>0.9.9-RC1</reflections.version>
 
         <!-- Project Properties -->
-        <xaos.version>1.0.0-SNAPSHOT</xaos.version>
         <mysql.db.url>jdbc:mysql://localhost:3306/${project.name}</mysql.db.url>
         <mysql.hibernate.hbm2ddl.auto>update</mysql.hibernate.hbm2ddl.auto>
         <mysql.hibernate.show.sql>false</mysql.hibernate.show.sql>
@@ -130,6 +132,7 @@
                 <plugin>
                     <groupId>org.eclipse.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>
+                    <version>${jetty-maven-plugin.version}</version>
                     <configuration>
                         <scanIntervalSeconds>10</scanIntervalSeconds>
                         <webApp>
@@ -160,24 +163,11 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                     </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-dependency-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <id>install</id>
-                            <phase>install</phase>
-                            <goals>
-                                <goal>sources</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
 
                 <plugin>
