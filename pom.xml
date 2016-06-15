@@ -2,28 +2,28 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dsecet</groupId>
-    <artifactId>xaos</artifactId>
+    <groupId>com.tim</groupId>
+    <artifactId>Basis</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>xaos</name>
-    <description>Xaos bill of materials</description>
-    <url>http://www.dceset.com/</url>
+    <name>Basis</name>
+    <description>Basis bill of materials</description>
+    <url>http://www.timyao.site</url>
     <organization>
-        <name>Dceset, Inc.</name>
-        <url>http://www.dsecet.com</url>
+        <name>Tim Yao, Org.</name>
+        <url>http://www.timyao.site</url>
     </organization>
 
     <inceptionYear>2014</inceptionYear>
     <licenses></licenses>
     <developers>
         <developer>
-            <id>fablenas</id>
-            <email>ry.wang@dsecet.com</email>
-            <name>Fablenas</name>
-            <organization>Dceset, Inc.</organization>
-            <organizationUrl>http://www.dsecet.com</organizationUrl>
+            <id>Tim Yao</id>
+            <email>yaoting@digitalchina.com</email>
+            <name>Tim Yao</name>
+            <organization>Tim Yao, Org.</organization>
+            <organizationUrl>http://www.timyao.site</organizationUrl>
             <roles>
                 <role>Architect</role>
             </roles>
@@ -31,8 +31,8 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:ssh://git@gitlab.defshanre.com/jee/xaos.git</connection>
-        <url>https://gitlab.defshanre.com/jee/xaos.git</url>
+        <connection>scm:git:git@github.com:yaoting10/Basis.git</connection>
+        <url>https://github.com/yaoting10/Basis.git</url>
         <tag>HEAD</tag>
     </scm>
     <mailingLists></mailingLists>
